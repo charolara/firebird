@@ -40,9 +40,11 @@ jobs:
           call "%VS_SCRIPT%" -arch=%FB_VS_ARCH%
           cd builds\win32
           call run_all.bat
+          if exist ..\..\output_x64_release\plugins\engine13.dll exit /b 0
 
-      - name: Upload zip
+      - name: Upload compilado
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: firebird-5.0.3-closehandle-windows-${{ matrix.platform }}-zip
-          path: builds/install_images/Firebird-*-windows-${{ matrix.platform }}.zip
+          name: firebird-5.0.3-closehandle-x64
+          path: output_x64_release/
